@@ -2,6 +2,10 @@ import React from "react";
 import { FaBehance, FaDribbble, FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Hero = () => {
+  // Split the subheading into individual characters (including spaces)
+  const subheading = "Creative Graphic Designer & Video Editor";
+  const letters = subheading.split("");
+
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 overflow-hidden perspective-[3000px]">
       {/* 3D Scene Container */}
@@ -13,7 +17,7 @@ const Hero = () => {
         <div className="absolute top-20 left-20 w-40 h-40 bg-purple-500/20 border border-white/10 rounded-lg transform rotate-45 translate-z-[-500px] animate-cube-spin"></div>
         <div className="absolute bottom-40 right-20 w-60 h-60 bg-indigo-500/20 border border-white/10 rounded-lg transform rotate-12 translate-z-[-800px] animate-cube-float"></div>
         
-        {/* Rotating Torus-like ring (using clip-path) */}
+        {/* Rotating Torus-like ring */}
         <div className="absolute top-1/3 left-1/4 w-80 h-80 border-4 border-purple-400/30 rounded-full transform rotate-x-60 rotate-y-30 translate-z-[-300px] animate-ring-rotate"></div>
         
         {/* Floating particles */}
@@ -31,30 +35,41 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* Main Content - No Boxes, Pure 3D Space */}
+      {/* Main Content */}
       <div className="container mx-auto px-6 md:px-12 relative z-10 transform-style-preserve-3d">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
-          {/* Left Text - Floating in 3D */}
+          {/* Left Text */}
           <div className="flex-1 text-center lg:text-left transform translate-z-[200px]">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 text-3d">
               Hi, I'm <span className="text-purple-300">Pallav</span>
             </h1>
-            <h2 className="text-2xl md:text-3xl text-white/80 mb-6 text-3d-light">
-              Creative Graphic Designer & Video Editor
+            
+            {/* Snake-like letter animation with 3s pause, repeating */}
+            <h2 className="text-2xl md:text-3xl text-white/80 mb-6 text-3d-light inline-block max-w-full break-words">
+              {letters.map((char, index) => (
+                <span
+                  key={index}
+                  className="inline-block animate-letter-rise"
+                  style={{ animationDelay: `${index * 0.03}s` }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
             </h2>
+
             <p className="text-white/70 max-w-lg mx-auto lg:mx-0 mb-8 text-lg text-3d-light">
               I craft stunning visuals and engaging videos that tell your story.
               From logo design to motion graphics – let's bring your ideas to life.
             </p>
 
-            {/* Hire Me Button - 3D Floating */}
+            {/* Hire Me Button */}
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-10">
               <button className="px-8 py-3 bg-purple-600 text-white font-semibold rounded-full shadow-2xl hover:bg-purple-700 transform hover:translate-z-10 hover:scale-110 transition-all duration-300 border border-purple-400/30 btn-3d">
                 Hire Me
               </button>
             </div>
 
-            {/* Social Icons - 3D Floating */}
+            {/* Social Icons */}
             <div className="flex gap-5 justify-center lg:justify-start text-white/80">
               <a href="#" className="hover:text-purple-300 transform hover:translate-z-5 hover:scale-125 transition-all duration-300">
                 <FaBehance size={32} />
@@ -79,7 +94,7 @@ const Hero = () => {
               {/* Inner Core - Hexagonal Image */}
               <div className="absolute inset-4 overflow-hidden rounded-[30%_70%_70%_30%/30%_30%_70%_70%] border-4 border-white/20 shadow-2xl transform translate-z-20 hover:scale-105 transition-transform duration-500">
                 <img
-                  src="https://via.placeholder.com/400x400/2a2a2a/ffffff?text=Pallav"
+                  src="/public/main.png"
                   alt="Pallav"
                   className="w-full h-full object-cover"
                 />
@@ -91,7 +106,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Custom CSS for Advanced 3D */}
+      {/* Custom CSS */}
       <style jsx>{`
         .perspective-\[3000px\] {
           perspective: 3000px;
@@ -151,6 +166,27 @@ const Hero = () => {
           transform: translateY(-2px) translateZ(10px);
           box-shadow: 0 8px 0 #4a1d6d, 0 20px 25px rgba(0,0,0,0.4);
         }
+
+        /* Letter rise animation with 3s pause, repeating */
+        @keyframes letter-rise {
+          0% {
+            opacity: 0;
+            transform: translateY(30px) scale(0.8);
+          }
+          12% { /* rise takes ~0.4s out of 3.4s cycle */
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        .animate-letter-rise {
+          animation: letter-rise 3.4s infinite ease-out;
+          opacity: 0; /* initial state hidden (will be overridden by animation) */
+        }
+
         @keyframes cube-spin {
           0% { transform: rotateX(0deg) rotateY(0deg) translateZ(-500px); }
           100% { transform: rotateX(360deg) rotateY(360deg) translateZ(-500px); }
